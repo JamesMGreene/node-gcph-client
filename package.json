@@ -27,11 +27,12 @@
 	},
 	"scripts": {},
 	"dependencies": {
-		"xml2js": "0.2.x"
+		"q": "0.8.x"
 	},
 	"devDependencies": {
 		"grunt": "~0.4.0a",
-		"grunt-contrib-jshint": "0.1.x"
+		"grunt-contrib-jshint": "0.1.x",
+		"commander": "1.1.x"
 	},
 	"keywords": [
 		"google code",

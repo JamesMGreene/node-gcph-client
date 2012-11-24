@@ -13,6 +13,9 @@ module.exports = function(grunt) {
 			},
 			lib: {
 				src: ['lib/**/*.js']
+			},
+			test: {
+				src: ['test/**/*.js']
 			}
 		},
 		watch: {
@@ -22,13 +25,17 @@ module.exports = function(grunt) {
 			},
 			lib: {
 				files: '<%= jshint.lib.src %>',
-				tasks: ['jshint:lib', 'nodeunit']
+				tasks: ['jshint:lib']
+			},
+			test: {
+				files: '<%= jshint.test.src %>',
+				tasks: ['jshint:test']
 			}
 		}
 	});
 
 	// Load tasks from Node modules.
-	grunt.loadNpmTask('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-contrib-jshint');
 
 	// Default task.
 	grunt.registerTask('default', ['jshint']);
