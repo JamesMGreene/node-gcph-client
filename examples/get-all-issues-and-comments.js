@@ -20,7 +20,7 @@ var gcph = require('../lib/gcph');
 
 var outputFilePath = process.argv[2];
 if (!outputFilePath) {
-	outputFilePath = path.resolve(process.cwd(), 'out/gcIssuesWithComments.json');
+	outputFilePath = path.resolve(process.cwd(), 'out/gcAllIssuesAndComments.json');
 	console.warn('WARNING: Did not provide an output filename as an argument. Defaulting to:\n  ' + outputFilePath + '\n');
 }
 
