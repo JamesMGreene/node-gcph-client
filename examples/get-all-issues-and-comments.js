@@ -1,4 +1,4 @@
-/*
+/*!
  * gcph-client
  * https://github.com/JamesMGreene/node-gcph-client
  *
