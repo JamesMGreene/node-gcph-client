@@ -9,69 +9,50 @@
 'use strict';
 
 // External modules
-var path = require('path');
-var commander = require('commander');
 var Q = require('q');
+var path = require('path');
 var fs = require('fs');
 
 // Internal modules
 var gcph = require('../lib/gcph');
+var exUtil = require('./ex-util');
 
 
+// Default the final output file if it was not provided as a commandline arg
 var outputFilePath = process.argv[2];
 if (!outputFilePath) {
 	outputFilePath = path.resolve(process.cwd(), 'out/gcAllIssuesAndComments.json');
 	console.warn('WARNING: Did not provide an output filename as an argument. Defaulting to:\n  ' + outputFilePath + '\n');
 }
 
+// Initialize the client for the Google Code Project Hosting Issue Tracker API
 var client = new gcph.Client();
-var cmd = new commander.Command();
 
-var getUsername = function(done) {
-	cmd.prompt('GC Username (james.m.greene@gmail.com): ', function(user) {
-		if (!user) {
-			// Default value
-			done(null, 'james.m.greene@gmail.com');
-		}
-		else {
-			done(null, user);
-		}
-	});
-};
+// Pre-bind all the Node promises for Q
+var getUsernameP = Q.nbind(exUtil.getUsername);
+var getPasswordP = Q.nbind(exUtil.getPassword);
+var loginP = Q.nbind(client.login, client);
+var getIssuesP = Q.nbind(client.getIssues, client);
+var getCommentsP = Q.nbind(client.getComments, client);
+var writeFileP = Q.nbind(fs.writeFile, fs);
 
-var getPassword = function(done) {
-	cmd.password('GC Password: ', '*', function(pass) {
-		if (!pass) {
-			done(new Error('Google Code does not allow empty passwords!'));
-		}
-		else {
-			process.stdin.destroy();
-			done(null, pass);
-		}
+getUsernameP().then(function(username) {
+	return getPasswordP().then(function(password) {
+		return loginP(username, password);
 	});
-};
-
-Q.napply(getUsername, null, []).then(function(username) {
-	return Q.napply(getPassword, null, []).then(function(password) {
-		return Q.resolve([username, password]);
-	});
-}).spread(function(username, password) {
-	return Q.napply(client.login, client, [username, password]);
 }).then(function() {
-	return Q.napply(client.getIssues, client, ['phantomjs', null]);
+	return getIssuesP('phantomjs');
 }).then(function(issues) {
 	return Q.all(issues.map(function(issue) {
-		return Q.napply(client.getComments, client, ['phantomjs', issue.id]).then(function(comments) {
+		return getCommentsP('phantomjs', issue.id).then(function(comments) {
 			issue.comments = comments || [];
-			return Q.resolve(issue);
+			return issue;
 		});
-	})).then(function() {
-		return Q.resolve(issues);
-	});
+	}));
 }).then(function(issues) {
-	return Q.napply(fs.writeFile, fs, [outputFilePath, JSON.stringify(issues, null, '  '), 'utf8']);
+	return writeFileP(outputFilePath, JSON.stringify(issues, null, '  '), 'utf8');
 }).then(function() {
-	console.log('All promises fulfilled!\n\nFinal JSON written to:\n  ' + outputFilePath);
+	console.log('All promises fulfilled!\n\nFinal JSON was written to:\n  ' + outputFilePath + '\n');
 }).fail(function(err) {
 	console.error(err);
-});
+}).done();
