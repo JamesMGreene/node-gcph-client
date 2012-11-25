@@ -25,27 +25,27 @@ var loginP = Q.nbind(client.login, client);
 var addIssueP = Q.nbind(client.addIssue, client);
 var updateIssueP = Q.nbind(client.updateIssue, client);
 
+var author;
 getUsernameP().then(function(username) {
+	author = username;
 	return getPasswordP().then(function(password) {
-		return loginP(username, password).then(function() {
-			// Pass this value along so we can pop the Q call chain
-			return username;
-		});
+		return loginP(username, password);
 	});
-}).then(function(username) {
+}).then(function() {
 	var newIssue = new gcph.Issue({
 		'title': 'API-generated example issue',
 		'content': 'This issue was generated using the amazing "node-gcph-client" library. Try it TODAY with `npm install gcph-client`! <3',
-		'author': username
+		'author': author
 	});
 	return addIssueP('jwalker', newIssue);
 }).then(function(newlyCreatedIssue) {
 	var newComment = new gcph.Comment({
-		
+		'author': author,
+		'content': 'This comment was generated using the amazing "node-gcph-client" library. Try it TODAY with `npm install gcph-client`! <3'
 	});
 	return updateIssueP('jwalker', newlyCreatedIssue, newComment);
-}).then(function() {
-	console.log('All promises fulfilled!\n\n');
+}).then(function(responseDataOfSomeKind) {
+	console.log('All promises fulfilled!\n\nResponse data:\n' + responseDataOfSomeKind);
 }).fail(function(err) {
 	console.error(err);
 }).done();
