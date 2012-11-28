@@ -29,12 +29,12 @@ if (!outputFilePath) {
 var client = new gcph.Client();
 
 // Pre-bind all the Node promises for Q
-var getUsernameP = Q.nbind(exUtil.getUsername);
-var getPasswordP = Q.nbind(exUtil.getPassword);
-var loginP = Q.nbind(client.login, client);
-var getIssuesP = Q.nbind(client.getIssues, client);
-var getCommentsP = Q.nbind(client.getComments, client);
-var writeFileP = Q.nbind(fs.writeFile, fs);
+var getUsernameP = Q.nfbind(exUtil.getUsername);
+var getPasswordP = Q.nfbind(exUtil.getPassword);
+var loginP       = Q.nfbind(client.login.bind(client));
+var getIssuesP   = Q.nfbind(client.getIssues.bind(client));
+var getCommentsP = Q.nfbind(client.getComments.bind(client));
+var writeFileP   = Q.nfbind(fs.writeFile.bind(fs));
 
 getUsernameP().then(function(username) {
 	return getPasswordP().then(function(password) {

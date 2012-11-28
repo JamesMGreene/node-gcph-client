@@ -19,15 +19,17 @@ var exUtil = require('./ex-util');
 var client = new gcph.Client();
 
 // Pre-bind all the Node promises for Q
-var getUsernameP = Q.nbind(exUtil.getUsername);
-var getPasswordP = Q.nbind(exUtil.getPassword);
-var loginP = Q.nbind(client.login, client);
-var addIssueP = Q.nbind(client.addIssue, client);
-var updateIssueP = Q.nbind(client.updateIssue, client);
+var getUsernameP = Q.nfbind(exUtil.getUsername);
+var getPasswordP = Q.nfbind(exUtil.getPassword);
+var loginP       = Q.nfbind(client.login.bind(client));
+var addIssueP    = Q.nfbind(client.addIssue.bind(client));
+var updateIssueP = Q.nfbind(client.updateIssue.bind(client));
 
 var author;
 getUsernameP().then(function(username) {
+	// Store this state for use later in the promise chain without having to work hard to continue passing it along when the chain pops
 	author = username;
+	
 	return getPasswordP().then(function(password) {
 		return loginP(username, password);
 	});
@@ -41,11 +43,18 @@ getUsernameP().then(function(username) {
 }).then(function(newlyCreatedIssue) {
 	var newComment = new gcph.Comment({
 		'author': author,
-		'content': 'This comment was generated using the amazing "node-gcph-client" library. Try it TODAY with `npm install gcph-client`! <3'
+		'content': 'This comment was generated using the amazing "node-gcph-client" library. Try it TODAY with `npm install gcph-client`! <3',
+		'issueUpdates': {
+			'labels': {
+				'added': ['Type-Enhancement', 'Domain-NodeJS'],
+				'removed': ['Type-Defect']
+			},
+			'owner': author
+		}
 	});
 	return updateIssueP('jwalker', newlyCreatedIssue, newComment);
-}).then(function(responseDataOfSomeKind) {
-	console.log('All promises fulfilled!\n\nResponse data:\n' + responseDataOfSomeKind);
+}).then(function(newlyCreatedComment) {
+	console.log('All promises fulfilled!\n\nNewly created comment:\n' + JSON.stringify(newlyCreatedComment));
 }).fail(function(err) {
 	console.error(err);
 }).done();
