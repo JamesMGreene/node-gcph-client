@@ -26,13 +26,12 @@
 		"node": ">= 0.6.0"
 	},
 	"scripts": {},
-	"dependencies": {
-		"q": "~0.8.11"
-	},
+	"dependencies": {},
 	"devDependencies": {
 		"grunt": "~0.4.0a",
 		"grunt-contrib-jshint": "0.1.x",
-		"commander": "1.1.x"
+		"commander": "1.1.x",
+		"q": "~0.8.11"
 	},
 	"keywords": [
 		"google code",

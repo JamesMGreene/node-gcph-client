@@ -8,19 +8,22 @@ Install the module with: `npm install gcph-client`
 ```js
 var gcph = require('gcph-client');
 var client = new gcph.Client();
+client.getIssues('phantomjs', function(issues) {
+	console.log(JSON.stringify(issues));
+});
 ```
 
 ## Documentation
-_(Coming soon)_
+_(Coming soon?)_
 
 ## Examples
-_(Coming soon)_
+See the "examples" folder.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+ - 1.0.0: Published to NPM on 2012-11-27
 
 ## License
 Copyright (c) 2012 James M. Greene  
