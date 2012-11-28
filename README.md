@@ -1,6 +1,6 @@
 # gcph-client
 
-A Node.js client for the Google Code Project Hosting Issue Tracker API.
+A Node.js client for the Google Code Project Hosting [Issue Tracker API](http://code.google.com/p/support/wiki/IssueTrackerAPI).
 
 ## Getting Started
 Install the module with: `npm install gcph-client`
