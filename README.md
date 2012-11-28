@@ -8,8 +8,10 @@ Install the module with: `npm install gcph-client`
 ```js
 var gcph = require('gcph-client');
 var client = new gcph.Client();
-client.getIssues('phantomjs', function(issues) {
-	console.log(JSON.stringify(issues));
+client.login('YourGoogleAccount@gmailOrWherever.com', 'p@s$w0r|)', function() {
+	client.getIssues('someGoogleCodeProject', function(issues) {
+		console.log(JSON.stringify(issues));
+	});
 });
 ```
 
