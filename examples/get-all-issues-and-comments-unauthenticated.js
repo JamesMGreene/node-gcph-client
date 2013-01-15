@@ -15,7 +15,6 @@ var fs = require('fs');
 
 // Internal modules
 var gcph = require('../lib/gcph');
-var exUtil = require('./util/ex-util');
 
 
 // Default the final output file if it was not provided as a commandline arg
@@ -33,32 +32,26 @@ if (!outputFilePath) {
 	) {
 		fs.mkdirSync(outputDir);
 	}
-	outputFilePath = path.resolve(outputDir, 'gcAllIssuesAndComments.json');
+	outputFilePath = path.resolve(outputDir, 'gcAllIssuesAndCommentsUnauthenticated.json');
 	
 	console.warn('WARNING: Did not provide an output filename as an argument. Defaulting to:\n  ' + outputFilePath + '\n');
 }
 
 // Initialize the client for the Google Code Project Hosting Issue Tracker API
-var client = new gcph.Client();
+var clientOpts = {
+	disableAuthWarnings: true
+};
+var client = new gcph.Client(clientOpts);
 
 // Pre-bind all the Node promises for Q
-var getUsernameP = Q.nfbind(exUtil.getUsername);
-var getPasswordP = Q.nfbind(exUtil.getPassword);
-var loginP       = Q.nfbind(client.login.bind(client));
 var getIssuesP   = Q.nfbind(client.getIssues.bind(client));
 var getCommentsP = Q.nfbind(client.getComments.bind(client));
 var writeFileP   = Q.nfbind(fs.writeFile.bind(fs));
 
-getUsernameP().then(function(username) {
-	return getPasswordP().then(function(password) {
-		return loginP(username, password);
-	});
-}).then(function() {
-	console.log('Authenticated!');
-	console.log('Now getting all issues and comments for the "phantomjs" project....');
-	
-	return getIssuesP('phantomjs');
-}).then(function(issues) {
+console.log('NOT authenticated!');
+console.log('Now getting all issues and comments for the "phantomjs" project....');
+
+getIssuesP('phantomjs').then(function(issues) {
 	return Q.all(issues.map(function(issue) {
 		return getCommentsP('phantomjs', issue.id).then(function(comments) {
 			issue.comments = comments || [];

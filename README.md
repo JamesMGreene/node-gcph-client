@@ -21,7 +21,7 @@ client.login('YourGoogleAccount@GmailOrWherever.com', 'p@s$w0r|)', function() {
 });
 ```
 
-For more complete examples, see the "examples" folder.
+For many much more complete examples, see the "examples" folder.
 
 
 ## Contributing
@@ -29,9 +29,13 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
- - 1.0.0: Published to NPM on 2012-11-27
+ - 1.1.0: Published to NPM on 2013-01-14.
+    - Added the ability to remain unauthenticated when possible.
+    - Added the ability to "honor privacy" (i.e. project members can still get the user's public display name).
+ - 1.0.0: Published to NPM on 2012-11-27.
+    - Complete authenticated API is supported.
 
 
 ## License
-Copyright (c) 2012 James M. Greene  
+Copyright (c) 2012-2013 James M. Greene  
 Licensed under the MIT license.

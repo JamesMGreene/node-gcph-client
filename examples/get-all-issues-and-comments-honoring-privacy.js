@@ -33,13 +33,16 @@ if (!outputFilePath) {
 	) {
 		fs.mkdirSync(outputDir);
 	}
-	outputFilePath = path.resolve(outputDir, 'gcAllIssuesAndComments.json');
+	outputFilePath = path.resolve(outputDir, 'gcAllIssuesAndCommentsHonoringPrivacy.json');
 	
 	console.warn('WARNING: Did not provide an output filename as an argument. Defaulting to:\n  ' + outputFilePath + '\n');
 }
 
 // Initialize the client for the Google Code Project Hosting Issue Tracker API
-var client = new gcph.Client();
+var clientOpts = {
+	honorPrivacy: true
+};
+var client = new gcph.Client(clientOpts);
 
 // Pre-bind all the Node promises for Q
 var getUsernameP = Q.nfbind(exUtil.getUsername);
@@ -54,7 +57,8 @@ getUsernameP().then(function(username) {
 		return loginP(username, password);
 	});
 }).then(function() {
-	console.log('Authenticated!');
+	console.log('Authenticated BUT also honoring privacy!');
+	console.warn('WARNING: This will be literally twice as slow as usual!');
 	console.log('Now getting all issues and comments for the "phantomjs" project....');
 	
 	return getIssuesP('phantomjs');
