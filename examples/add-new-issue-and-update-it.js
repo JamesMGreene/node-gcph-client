@@ -56,5 +56,5 @@ getUsernameP().then(function(username) {
 }).then(function(newlyCreatedComment) {
 	console.log('All promises fulfilled!\n\nNewly created comment:\n' + JSON.stringify(newlyCreatedComment));
 }).fail(function(err) {
-	console.error(err);
+	console.error(err.stack || err);
 }).done();

@@ -63,5 +63,5 @@ getIssuesP('phantomjs').then(function(issues) {
 }).then(function() {
 	console.log('All promises fulfilled!\n\nFinal JSON was written to:\n  ' + outputFilePath + '\n');
 }).fail(function(err) {
-	console.error(err);
+	console.error(err.stack || err);
 }).done();

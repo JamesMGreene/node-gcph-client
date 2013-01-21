@@ -29,6 +29,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
+ - 1.3.0: Published to NPM on 2013-01-20.
+    - Added `blocks` to the Issue object.
+    - Parsed the `blocks` and `mergedInto` values for Comments as integers.
+ - 1.2.0: Published to NPM on 2013-01-18.
+    - Removed over-zealous use of `Object.create(null);`.
  - 1.1.0: Published to NPM on 2013-01-14.
     - Added the ability to remain unauthenticated when possible.
     - Added the ability to "honor privacy" (i.e. project members can still get the user's public display name).
