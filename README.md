@@ -29,9 +29,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
+ - 1.4.0: Published to NPM on 2013-01-21.
+    - Added `project` and `issueId` to the Comment object.
  - 1.3.0: Published to NPM on 2013-01-20.
-    - Added `blocks` to the Issue object.
-    - Parsed the `blocks` and `mergedInto` values for Comments as integers.
+    - Added `blocks` and `project` to the Issue object.
+    - Parsed the `id`, `blocks`, and `mergedInto` values for Comments as integers.
  - 1.2.0: Published to NPM on 2013-01-18.
     - Removed over-zealous use of `Object.create(null);`.
  - 1.1.0: Published to NPM on 2013-01-14.
