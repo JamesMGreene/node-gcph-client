@@ -29,6 +29,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
+ - 1.5.1: Published to NPM on 2013-01-21.
+    - Minor bug fix/input sanitizing for the new `Issue.getUrl` method.
  - 1.5.0: Published to NPM on 2013-01-21.
     - Added the `Issue.getUrl` method.
  - 1.4.0: Published to NPM on 2013-01-21.
