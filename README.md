@@ -29,6 +29,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
+ - 1.5.2: Published to NPM on 2013-01-22.
+    - Minor bug fix to prevent the username "---" (represented removal, e.g. Issue had an owner but now it doesn't) from having "@gmail.com" appended.
  - 1.5.1: Published to NPM on 2013-01-21.
     - Minor bug fix/input sanitizing for the new `Issue.getUrl` method.
  - 1.5.0: Published to NPM on 2013-01-21.
