@@ -31,6 +31,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
+ - 1.5.5: Published to NPM on 2013-03-04.
+    - Fixed a lint issue.
  - 1.5.4: Published to NPM on 2013-01-23.
     - Fixed the Comment object so that it exposes its `project` and `issueId` properties.
  - 1.5.3: Published to NPM on 2013-01-22.
