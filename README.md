@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/JamesMGreene/node-gcph-client.png)](https://travis-ci.org/JamesMGreene/node-gcph-client)
+
 # gcph-client
 
 A Node.js client for the Google Code Project Hosting [Issue Tracker API](http://code.google.com/p/support/wiki/IssueTrackerAPI).
