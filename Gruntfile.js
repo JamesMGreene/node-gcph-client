@@ -39,5 +39,7 @@ module.exports = function(grunt) {
 
 	// Default task.
 	grunt.registerTask('default', ['jshint']);
+	// Travis-CI task.
+	grunt.registerTask('travis', ['jshint']);
 
 };
