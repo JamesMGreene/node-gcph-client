@@ -7,6 +7,7 @@
  */
 
 'use strict';
+//require('nodetime').profile();
 
 // External modules
 var Q = require('q');

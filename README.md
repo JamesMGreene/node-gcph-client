@@ -31,6 +31,8 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
+ - 1.6.0: Published to NPM on 2013-MM-DD.
+    - Added a throttle of 20 concurrent requests, per Google's request, using [chain-gang](https://github.com/technoweenie/node-chain-gang).
  - 1.5.5: Published to NPM on 2013-03-04.
     - Fixed a lint issue.
  - 1.5.4: Published to NPM on 2013-01-23.
