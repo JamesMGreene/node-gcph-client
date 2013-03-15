@@ -1,8 +1,7 @@
 {
 	"name": "gcph-client",
 	"description": "A Node.js client for the Google Code Project Hosting Issue Tracker API.",
-	"version": "1.5.5",
-	"version": "1.5.6",
+	"version": "1.5.7",
 	"homepage": "https://github.com/JamesMGreene/node-gcph-client",
 	"author": {
 		"name": "James M. Greene",
