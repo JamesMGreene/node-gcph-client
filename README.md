@@ -31,9 +31,11 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
- - 1.5.7: Published to NPM on 2013-03-15
+ - 1.5.8: Published to NPM on 2013-03-15.
+    - Fixed a bug with issues missing when honoring user privacy due the issue addressed in 1.5.7.
+ - 1.5.7: Published to NPM on 2013-03-15.
     - Fixed a bug with not getting all the issues when there are more than 1000 (due to Google overriding the URL). Still need to do the same for comments.
- - 1.5.6: Published to NPM on 2013-03-15
+ - 1.5.6: Published to NPM on 2013-03-15.
     - Fixed a bug/vulnerability with the `author` field.
  - 1.5.5: Published to NPM on 2013-03-04.
     - Fixed a lint issue.
