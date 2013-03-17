@@ -17,7 +17,7 @@ var fs = require('fs');
 var gcph = require('../lib/gcph');
 
 // Config
-var projectName = 'phantomjs';
+var projectName = 'android';
 
 
 // Default the final output file if it was not provided as a commandline arg
@@ -35,14 +35,15 @@ if (!outputFilePath) {
 	) {
 		fs.mkdirSync(outputDir);
 	}
-	outputFilePath = path.resolve(outputDir, projectName + '-gcAllIssuesAndCommentsUnauthenticated.json');
+	outputFilePath = path.resolve(outputDir, projectName + '-gcSingleIssueWithAllCommentsUnauthenticated.json');
 	
 	console.warn('WARNING: Did not provide an output filename as an argument. Defaulting to:\n  ' + outputFilePath + '\n');
 }
 
 // Initialize the client for the Google Code Project Hosting Issue Tracker API
 var clientOpts = {
-	disableAuthWarnings: true
+	disableAuthWarnings: true,
+	followNextIssueLinks: false
 };
 var client = new gcph.Client(clientOpts);
 
@@ -51,10 +52,16 @@ var getIssuesP   = Q.nfbind(client.getIssues.bind(client));
 var getCommentsP = Q.nfbind(client.getComments.bind(client));
 var writeFileP   = Q.nfbind(fs.writeFile.bind(fs));
 
-console.log('NOT authenticated!');
-console.log('Now getting all issues and comments for the "' + projectName + '" project....');
+// Config
+var query = new gcph.Query({
+	'id': 9329,
+	'max-results': 1
+});
 
-getIssuesP(projectName).then(function(issues) {
+console.log('NOT authenticated!');
+console.log('Now getting issue #' + query.id + ' and its comments for the "' + projectName + '" project....');
+
+getIssuesP(projectName, query).then(function(issues) {
 	return Q.all(issues.map(function(issue) {
 		return getCommentsP(projectName, issue.id).then(function(comments) {
 			issue.comments = comments || [];

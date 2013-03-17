@@ -17,6 +17,8 @@ var fs = require('fs');
 var gcph = require('../lib/gcph');
 var exUtil = require('./util/ex-util');
 
+// Config
+var projectName = 'phantomjs';
 
 // Default the final output file if it was not provided as a commandline arg
 var outputFilePath = process.argv[2];
@@ -33,7 +35,7 @@ if (!outputFilePath) {
 	) {
 		fs.mkdirSync(outputDir);
 	}
-	outputFilePath = path.resolve(outputDir, 'gcAllIssuesAndComments.json');
+	outputFilePath = path.resolve(outputDir, projectName + '-gcAllIssuesAndComments.json');
 	
 	console.warn('WARNING: Did not provide an output filename as an argument. Defaulting to:\n  ' + outputFilePath + '\n');
 }
@@ -55,12 +57,12 @@ getUsernameP().then(function(username) {
 	});
 }).then(function() {
 	console.log('Authenticated!');
-	console.log('Now getting all issues and comments for the "phantomjs" project....');
+	console.log('Now getting all issues and comments for the "' + projectName + '" project....');
 	
-	return getIssuesP('phantomjs');
+	return getIssuesP(projectName);
 }).then(function(issues) {
 	return Q.all(issues.map(function(issue) {
-		return getCommentsP('phantomjs', issue.id).then(function(comments) {
+		return getCommentsP(projectName, issue.id).then(function(comments) {
 			issue.comments = comments || [];
 			return issue;
 		});

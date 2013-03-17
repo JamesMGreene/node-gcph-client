@@ -17,6 +17,9 @@ var fs = require('fs');
 var gcph = require('../lib/gcph');
 var exUtil = require('./util/ex-util');
 
+// Config
+var projectName = 'phantomjs';
+
 
 // Default the final output file if it was not provided as a commandline arg
 var outputFilePath = process.argv[2];
@@ -33,7 +36,7 @@ if (!outputFilePath) {
 	) {
 		fs.mkdirSync(outputDir);
 	}
-	outputFilePath = path.resolve(outputDir, 'gcAllIssuesAndCommentsHonoringPrivacy.json');
+	outputFilePath = path.resolve(outputDir, projectName + '-gcAllIssuesAndCommentsHonoringPrivacy.json');
 	
 	console.warn('WARNING: Did not provide an output filename as an argument. Defaulting to:\n  ' + outputFilePath + '\n');
 }
@@ -52,6 +55,7 @@ var getIssuesP   = Q.nfbind(client.getIssues.bind(client));
 var getCommentsP = Q.nfbind(client.getComments.bind(client));
 var writeFileP   = Q.nfbind(fs.writeFile.bind(fs));
 
+console.warn('WARNING: You must be a project admin for "' + projectName + '" to make this example work correctly.');
 getUsernameP().then(function(username) {
 	return getPasswordP().then(function(password) {
 		return loginP(username, password);
@@ -59,12 +63,12 @@ getUsernameP().then(function(username) {
 }).then(function() {
 	console.log('Authenticated BUT also honoring privacy!');
 	console.warn('WARNING: This will be literally twice as slow as usual!');
-	console.log('Now getting all issues and comments for the "phantomjs" project....');
+	console.log('Now getting all issues and comments for the "' + projectName + '" project....');
 	
-	return getIssuesP('phantomjs');
+	return getIssuesP(projectName);
 }).then(function(issues) {
 	return Q.all(issues.map(function(issue) {
-		return getCommentsP('phantomjs', issue.id).then(function(comments) {
+		return getCommentsP(projectName, issue.id).then(function(comments) {
 			issue.comments = comments || [];
 			return issue;
 		});

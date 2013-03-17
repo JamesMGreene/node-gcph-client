@@ -25,6 +25,7 @@ var loginP       = Q.nfbind(client.login.bind(client));
 var addIssueP    = Q.nfbind(client.addIssue.bind(client));
 var updateIssueP = Q.nfbind(client.updateIssue.bind(client));
 
+var projectName = 'jwalker';
 var author;
 getUsernameP().then(function(username) {
 	// Store this state for use later in the promise chain without having to work hard to continue passing it along when the chain pops
@@ -39,7 +40,7 @@ getUsernameP().then(function(username) {
 		'content': 'This issue was generated using the amazing "node-gcph-client" library. Try it TODAY with `npm install gcph-client`! <3',
 		'author': author
 	});
-	return addIssueP('jwalker', newIssue);
+	return addIssueP(projectName, newIssue);
 }).then(function(newlyCreatedIssue) {
 	var newComment = new gcph.Comment({
 		'author': author,
@@ -52,7 +53,7 @@ getUsernameP().then(function(username) {
 			'owner': author
 		}
 	});
-	return updateIssueP('jwalker', newlyCreatedIssue, newComment);
+	return updateIssueP(projectName, newlyCreatedIssue, newComment);
 }).then(function(newlyCreatedComment) {
 	console.log('All promises fulfilled!\n\nNewly created comment:\n' + JSON.stringify(newlyCreatedComment));
 }).fail(function(err) {

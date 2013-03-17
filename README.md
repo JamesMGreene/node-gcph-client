@@ -31,6 +31,9 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 
 ## Release History
+ - 1.5.9: Published to NPM on 2013-03-17.
+    - Fixed a bug with comments missing when there are more than 1000.
+    - Fixed a bug with calculating the issue ID for each comment.
  - 1.5.8: Published to NPM on 2013-03-15.
     - Fixed a bug with issues missing when honoring user privacy due the issue addressed in 1.5.7.
  - 1.5.7: Published to NPM on 2013-03-15.
