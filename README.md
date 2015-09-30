@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/JamesMGreene/node-gcph-client.png)](https://travis-ci.org/JamesMGreene/node-gcph-client)
+[![Build Status](https://travis-ci.org/JamesMGreene/node-gcph-client.png?branch=master)](https://travis-ci.org/JamesMGreene/node-gcph-client)
 
 # gcph-client
 
